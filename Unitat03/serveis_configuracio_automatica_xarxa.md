@@ -80,6 +80,7 @@ Per veure les notes de l'orador pitja S
 
 Note:
 Que passa si la renovació és cada setmana?
+
 ---
 
 ### Paràmetres principals de configuració
