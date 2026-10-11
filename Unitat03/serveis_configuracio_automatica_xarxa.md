@@ -42,6 +42,8 @@ Per veure les notes de l'orador pitja S
   * **IPv4:** ARP, RARP, ICMP
   * **IPv6:** ICMPv6 (substitueix ARP i integra NDP)
 
+posar una imatge
+
 ---
 
 ### Els predecessors de DHCP
