@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Serveis de configuració automàtica de xarxa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/serif.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/github.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* cspell:disable */
+    :root {
+      --deck-green: #32cd33;
+      --deck-green-dark: #175f16;
+      --deck-text: #555;
+      --deck-soft-green: #eff8ef;
+    }
+
+    .reveal {
+      --r-background-color: #fff;
+      --r-main-font: "Poppins", Arial, sans-serif;
+      --r-main-color: var(--deck-text);
+      --r-heading-font: "Poppins", Arial, sans-serif;
+      --r-heading-color: var(--deck-green-dark);
+      --r-link-color: var(--deck-green-dark);
+      --r-link-color-hover: var(--deck-green);
+      font-family: "Poppins", Arial, sans-serif;
+    }
+
+    .reveal .slides section {
+      text-align: left;
+      box-sizing: border-box;
+      padding: 120px 24px 18px;
+    }
+
+    .reveal h1,
+    .reveal h2,
+    .reveal h3,
+    .reveal h4 {
+      font-family: "Poppins", Arial, sans-serif;
+    }
+
+    .reveal h1 {
+      color: var(--deck-green-dark);
+      font-size: 2.6em;
+    }
+
+    .reveal h2 {
+      padding-left: 0.45em;
+      border-left: 0.12em solid var(--deck-green);
+      color: var(--deck-green-dark);
+    }
+
+    .reveal h3,
+    .reveal h4 {
+      color: var(--deck-green-dark);
+    }
+
+    .reveal .slides > section:first-child h1:first-child {
+      color: var(--deck-green-dark);
+    }
+
+    .reveal p,
+    .reveal li {
+      line-height: 1;
+    }
+
+    .reveal ul,
+    .reveal ol {
+      display: block;
+      margin-left: 0.7em;
+    }
+
+    .reveal li::marker {
+      color: var(--deck-green);
+    }
+
+    .reveal strong {
+      color: var(--deck-green-dark);
+      font-weight: 600;
+    }
+
+    .reveal code {
+      color: var(--deck-green-dark);
+      background: var(--deck-soft-green);
+      border-radius: 0.2em;
+      padding: 0.08em 0.25em;
+    }
+
+    .reveal pre code {
+      border-left: 4px solid var(--deck-green);
+    }
+
+    .reveal table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.58em;
+    }
+
+    .reveal th {
+      background: var(--deck-green-dark);
+      color: #fff;
+    }
+
+    .reveal th,
+    .reveal td {
+      padding: 0.4em 0.55em;
+      border: 1px solid #d8e5d8;
+    }
+
+    .reveal tr:nth-child(even) td {
+      background: var(--deck-soft-green);
+    }
+
+    .reveal .progress {
+      color: var(--deck-green);
+    }
+
+    .deck-header {
+      position: fixed;
+      z-index: 30;
+      top: 16px;
+      left: 20px;
+      width: 170px;
+      pointer-events: none;
+    }
+
+    .deck-header img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    /* cspell:enable */
+  </style>
+</head>
+<body>
+
+  <header class="deck-header">
+    <img src="IconaSXI.svg" alt="Serveis de Xarxa i Internet">
+  </header>
+
+  <div class="reveal">
+    <div class="slides">
+      <!-- Carregador extern del fitxer Markdown -->
+      <section data-markdown="serveis_configuracio_automatica_xarxa.md"
+               data-separator="^\r?\n---\r?\n$"
+               data-separator-vertical="^\r?\n--\r?\n$"
+               data-notes="^Note:">
+      </section>
+    </div>
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/markdown/markdown.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/notes/notes.min.js"></script>
+
+  <script>
+    /* cspell:disable */
+    Reveal.initialize({
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+      /* Ajusta la mida de la presentació a la pantalla */
+      width: 1600,
+      height: 900,
+      margin: 0.02,
+      hash: true,
+      progress: true
+    });
+    /* cspell:enable */
+  </script>
+</body>
+</html>
