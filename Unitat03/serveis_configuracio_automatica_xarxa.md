@@ -6,6 +6,8 @@
 **Cicle:** Administració de Sistemes Informàtics en Xarxa   
 **Professor:** José Maria Madroñal Oliver 
 
+afegir notes per completar presentació
+
 Note:
 Per veure les notes de l'orador pitja S
 
@@ -35,7 +37,7 @@ Per veure les notes de l'orador pitja S
 
 ### Ubicació dels protocols al model TCP/IP
 
-![Protocol tcp ip](Unitat03/img/protocol_tcp_ip.png)
+![Protocol tcp ip](img/protocol_tcp_ip.png)
 
 note:
 * **Capa d'Aplicació / Transport:** 
@@ -116,7 +118,7 @@ Més enllà de la IP, DHCP transmet opcions de configuració (RFC 2132):
 
 ### Estructura del missatge DHCP (RFC 2131)
 
-![Missatges DHCP](/Unitat03/img/missatge_DHCP.png)
+![Missatges DHCP](img/missatge_DHCP.png)
 
  https://www.rfc-editor.org/info/rfc2131/#page-8
 
