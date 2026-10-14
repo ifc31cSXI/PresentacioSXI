@@ -35,7 +35,7 @@ Per veure les notes de l'orador pitja S
 
 ### Ubicació dels protocols al model TCP/IP
 
-![Protocol tcp ip](/Unitat03/img/protocol_tcp_ip.png)
+![Protocol tcp ip](Unitat03/img/protocol_tcp_ip.png)
 
 note:
 * **Capa d'Aplicació / Transport:** 
