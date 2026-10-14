@@ -33,15 +33,49 @@
     .reveal .slides section {
       text-align: left;
       box-sizing: border-box;
-      padding: 120px 24px 18px;
+      padding: 100px 70px 18px;
     }
 
+    .reveal .slides section .mermaid {
+      width: 100%;
+      text-align: center;
+      border-left: 4px solid var(--deck-green);
+    }
+    
+    .reveal .slides section .mermaid svg {
+      max-width: 100%;
+      max-height: 75vh;
+      width: auto;
+      height: auto;
+    }
+    
     .reveal h1,
     .reveal h2,
     .reveal h3,
-    .reveal h4 {
-      font-family: "Poppins", Arial, sans-serif;
+    .reveal h4,
+    .reveal h5,
+    .reveal h6 {
+      font-weight: 500;
+      font-family: "Poppins", Arial, sans-serif
     }
+
+
+    .reveal h4,
+    .reveal h5,
+    .reveal h6 {
+      font-family: "Poppins", Arial, sans-serif;
+      /* margin-top: 1em; */
+      margin-bottom: 0.4em;
+    }
+
+        /* .reveal h4 {
+      color: var(--deck-green-dark);
+      font-family: "Poppins", Arial, sans-serif;
+      font-size: 1.15em;
+      font-weight: 700;
+      margin-top: 1em;
+      margin-bottom: 0.4em;
+    } */
 
     .reveal h1 {
       color: var(--deck-green-dark);
@@ -65,8 +99,33 @@
 
     .reveal p,
     .reveal li {
-      line-height: 1;
+      line-height: 1.2;
+      font-size: 0.80em;
     }
+
+    .reveal .slides section img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 50vh;
+      object-fit: contain;
+      margin: 0.35em 0 0 2em;
+      
+    }
+
+.reveal a {
+  color: var(--deck-green-dark);
+  text-decoration: underline;
+  text-decoration-color: var(--deck-green);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.reveal a:hover {
+  color: var(--deck-green);
+  background: var(--deck-soft-green);
+}
 
     .reveal ul,
     .reveal ol {
@@ -139,16 +198,16 @@
 <body>
 
   <header class="deck-header">
-    <img src="IconaSXI.svg" alt="Serveis de Xarxa i Internet">
+    <img src="img/IconaSXI.svg" alt="Serveis de Xarxa i Internet">
   </header>
 
   <div class="reveal">
     <div class="slides">
       <!-- Carregador extern del fitxer Markdown -->
-      <section data-markdown="serveis_configuracio_automatica_xarxa.md"
-               data-separator="^\r?\n---\r?\n$"
-               data-separator-vertical="^\r?\n--\r?\n$"
-               data-notes="^Note:">
+      <section id="presentation-markdown"
+         data-separator="^\r?\n---\r?\n$"
+         data-separator-vertical="^\r?\n---v\r?\n$"
+         data-notes="^Note:">
       </section>
     </div>
   </div>
@@ -158,7 +217,44 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/markdown/markdown.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/notes/notes.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.3/dist/mermaid.min.js"></script>
+  <script>
+    const markdownFiles = [
+      "Unitat03/serveis_configuracio_automatica_xarxa.md",
+      "Unitat03/file.md"
+    ];
+  
+    const requestedFile = new URLSearchParams(window.location.search).get("md");
+    const selectedFile = markdownFiles.includes(requestedFile)
+      ? requestedFile
+      : "Unitat03/serveis_configuracio_automatica_xarxa.md";
+  
+    document
+      .querySelector("#presentation-markdown")
+      .setAttribute("data-markdown", selectedFile);
+    // index-slide.html?md=GuiaGitGithub.md
+    // index-slide.html?md=GuiaCollaboracioGit.md
+    // index-slide.html?md=GuiaVisualStudioCodeAmbGitiGitHub.md
+  </script>
+  <script>
+    mermaid.initialize({ startOnLoad: false });
 
+    async function renderMermaidInSlide(slide) {
+      await new Promise(requestAnimationFrame);
+      const nodes = [...slide.querySelectorAll('pre > code.mermaid')].map(code => {
+        const diagram = code.parentElement;
+        diagram.classList.add('mermaid');
+        diagram.textContent = code.textContent;
+        return diagram;
+      });
+      if (nodes.length > 0) {
+        await mermaid.run({ nodes });
+      }
+    }
+
+    Reveal.on('ready', event => renderMermaidInSlide(event.currentSlide));
+    Reveal.on('slidechanged', event => renderMermaidInSlide(event.currentSlide));
+  </script>
   <script>
     /* cspell:disable */
     Reveal.initialize({
@@ -167,6 +263,7 @@
       width: 1600,
       height: 900,
       margin: 0.02,
+      center: false,
       hash: true,
       progress: true
     });
