@@ -35,14 +35,15 @@ Per veure les notes de l'orador pitja S
 
 ### Ubicació dels protocols al model TCP/IP
 
+![Protocol tcp ip](/Unitat03/img/protocol_tcp_ip.png)
+
+note:
 * **Capa d'Aplicació / Transport:** 
   * DHCP / DHCPv6 (Port UDP 67/68 per IPv4, UDP 546/547 per IPv6)
   * BOOTP (UDP 67/68)
 * **Capa d'Internet / Enllaç:**
   * **IPv4:** ARP, RARP, ICMP
   * **IPv6:** ICMPv6 (substitueix ARP i integra NDP)
-
-posar una imatge
 
 ---
 
@@ -110,6 +111,17 @@ Més enllà de la IP, DHCP transmet opcions de configuració (RFC 2132):
 | **DHCPDECLINE** | Client | Notifica que la IP oferida ja està en ús a la xarxa. |
 | **DHCPRELEASE** | Client | Allibera la IP voluntàriament. |
 | **DHCPINFORM** | Client | Demana opcions locals (ja té la IP configurada). |
+
+---
+
+### Estructura del missatge DHCP (RFC 2131)
+
+![Missatges DHCP](/Unitat03/img/missatge_DHCP.png)
+
+ https://www.rfc-editor.org/info/rfc2131/#page-8
+
+note:
+Possar en marxa el wireshark i capturar missatge bootp
 
 ---
 
