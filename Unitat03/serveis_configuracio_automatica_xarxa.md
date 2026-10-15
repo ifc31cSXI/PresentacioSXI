@@ -64,6 +64,8 @@ note:
 * Utilitza segments UDP (Port 67 Servidor, Port 68 Client).
 * Permet carregar la imatge del SO des d'un servidor TFTP.
 
+https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2003/cc781243(v=ws.10)
+
 ---
 
 ## 2. El Protocol DHCP (IPv4)
@@ -107,7 +109,7 @@ Més enllà de la IP, DHCP transmet opcions de configuració (RFC 2132):
 | :--- | :--- | :--- |
 | **DHCPDISCOVER** | Client | Difusió (*Broadcast*) per trobar servidors DHCP disponibles. |
 | **DHCPOFFER** | Servidor | Resposta Unicast/Broadcast amb una oferta de configuració. |
-| **DHCPREQUEST** | Client | Sol·licita l'adreça oferts o demana renovar una IP existent. |
+| **DHCPREQUEST** | Client | Sol·licita una oferta d'adreça o demana renovar una IP existent. |
 | **DHCPACK** | Servidor | Confirmació final amb els paràmetres assignats. |
 | **DHCPNAK** | Servidor | Denegació (IP no vàlida o caducada). |
 | **DHCPDECLINE** | Client | Notifica que la IP oferida ja està en ús a la xarxa. |
@@ -131,6 +133,7 @@ Possar en marxa el wireshark i capturar missatge bootp
 
 ```
  Client (DHCP Client)                 Servidor (DHCP Server)
+        68                                      67
         |                                       |
         | ------ DHCPDISCOVER (Broadcast) ----> |
         | <----- DHCPOFFER (Unicast/Bcast) ---- |
@@ -158,8 +161,11 @@ Si un client no troba cap servidor DHCP, el sistema assigna una adreça **APIPA*
 ---
 
 ### Agent Relé (DHCP Relay Agent)
+</br>
 
 * Els missatges `DHCPDISCOVER` són **Broadcasts limitats (`255.255.255.255`)** i els encaminadors els bloquegen.
+</br>
+  
 * Un **Agent Relé** (normalment configurat al router o switch L3):
   1. Rep el Broadcast local del client.
   2. El transforma en un missatge **Unicast** cap a la IP del servidor DHCP centralitzat.
@@ -168,6 +174,12 @@ Si un client no troba cap servidor DHCP, el sistema assigna una adreça **APIPA*
 ```
 [ Client ] --(Broadcast)--> [ Router / Agent Relé ] --(Unicast)--> [ Servidor DHCP ]
 ```
+
+---
+
+### DHCP Relay Information Option
+
+![DHCP Relay](img/dhcp_relay.png)
 
 ---
 
