@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title description">
+  <title id="title">Diferència entre domini i zona DNS</title>
+  <desc id="description">L'arbre del domini exemple.com inclou el subdomini lab. La delegació de lab crea una zona separada: la zona exemple.com conté els registres del domini i la delegació cap a lab, mentre que la zona lab.exemple.com conté els seus propis registres.</desc>
+  <defs>
+    <style>
+      .title { font: 600 38px Arial, sans-serif; fill: #175f16; }
+      .subtitle { font: 400 22px Arial, sans-serif; fill: #555; }
+      .panel-title { font: 600 26px Arial, sans-serif; fill: #175f16; }
+      .label { font: 600 24px Arial, sans-serif; fill: #175f16; }
+      .detail { font: 400 19px Arial, sans-serif; fill: #555; }
+      .small { font: 400 17px Arial, sans-serif; fill: #555; }
+      .node { fill: #eff8ef; stroke: #32cd33; stroke-width: 2; }
+      .zone { fill: #eff8ef; fill-opacity: .55; stroke: #32cd33; stroke-width: 4; }
+      .delegated-zone { fill: #f4f9ff; fill-opacity: .8; stroke: #4983b8; stroke-width: 4; }
+      .branch { fill: none; stroke: #8a9b8a; stroke-width: 3; }
+      .delegation { fill: none; stroke: #4983b8; stroke-width: 3; stroke-dasharray: 9 8; }
+      .badge { fill: #175f16; }
+      .badge-text { font: 600 18px Arial, sans-serif; fill: #fff; }
+      .legend-text { font: 400 18px Arial, sans-serif; fill: #555; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4983b8"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="#fff"/>
+  <text x="800" y="58" text-anchor="middle" class="title">Domini i zona: dos conceptes diferents</text>
+  <text x="800" y="94" text-anchor="middle" class="subtitle">El domini descriu una branca de l'arbre; la zona, qui n'administra les dades.</text>
+
+  <rect x="55" y="130" width="700" height="650" rx="18" fill="#fafdfa" stroke="#d8e5d8" stroke-width="2"/>
+  <text x="405" y="178" text-anchor="middle" class="panel-title">1. L'arbre de dominis</text>
+  <text x="405" y="210" text-anchor="middle" class="detail">El domini exemple.com inclou els seus subdominis</text>
+
+  <rect x="118" y="250" width="575" height="480" rx="20" fill="none" stroke="#32cd33" stroke-width="4" stroke-dasharray="12 8"/>
+  <rect x="138" y="263" width="208" height="38" rx="19" class="badge"/>
+  <text x="242" y="289" text-anchor="middle" class="badge-text">DOMINI exemple.com</text>
+
+  <path class="branch" d="M405 337 V385 M405 385 H280 V425 M405 385 H530 V425 M530 475 V530 M530 530 H430 V570 M530 530 H620 V570"/>
+  <rect x="330" y="305" width="150" height="52" rx="12" class="node"/>
+  <text x="405" y="339" text-anchor="middle" class="label">exemple.com</text>
+  <rect x="205" y="425" width="150" height="52" rx="12" class="node"/>
+  <text x="280" y="459" text-anchor="middle" class="label">www</text>
+  <rect x="455" y="425" width="150" height="52" rx="12" class="node"/>
+  <text x="530" y="459" text-anchor="middle" class="label">lab</text>
+  <rect x="355" y="570" width="150" height="52" rx="12" class="node"/>
+  <text x="430" y="604" text-anchor="middle" class="label">api</text>
+  <rect x="545" y="570" width="150" height="52" rx="12" class="node"/>
+  <text x="620" y="604" text-anchor="middle" class="label">dev</text>
+  <text x="405" y="682" text-anchor="middle" class="small">La branca és una jerarquia de noms;</text>
+  <text x="405" y="708" text-anchor="middle" class="small">per si sola no indica qui l'administra.</text>
+
+  <rect x="845" y="130" width="700" height="650" rx="18" fill="#fafdfa" stroke="#d8e5d8" stroke-width="2"/>
+  <text x="1195" y="178" text-anchor="middle" class="panel-title">2. Les zones d'autoritat</text>
+  <text x="1195" y="210" text-anchor="middle" class="detail">La delegació separa l'administració del subdomini</text>
+
+  <rect x="887" y="250" width="615" height="480" rx="20" class="zone"/>
+  <rect x="907" y="263" width="252" height="38" rx="19" class="badge"/>
+  <text x="1033" y="289" text-anchor="middle" class="badge-text">ZONA exemple.com</text>
+  <text x="1030" y="347" text-anchor="middle" class="small">Registres gestionats per l'autoritat de exemple.com</text>
+
+  <path class="branch" d="M1035 395 V435 M1035 435 H965 V472 M1035 435 H1135 V472"/>
+  <rect x="955" y="365" width="160" height="50" rx="12" class="node"/>
+  <text x="1035" y="397" text-anchor="middle" class="label">exemple.com</text>
+  <rect x="895" y="472" width="140" height="50" rx="12" class="node"/>
+  <text x="965" y="504" text-anchor="middle" class="label">www</text>
+  <rect x="1065" y="472" width="140" height="50" rx="12" class="node"/>
+  <text x="1135" y="504" text-anchor="middle" class="label">lab NS</text>
+  <text x="1135" y="546" text-anchor="middle" class="small">registre de delegació</text>
+
+  <path class="delegation" d="M1200 497 H1282 V440" marker-end="url(#arrow)"/>
+  <text x="1324" y="463" text-anchor="middle" class="small">delegació NS</text>
+
+  <rect x="1240" y="385" width="235" height="310" rx="18" class="delegated-zone"/>
+  <rect x="1257" y="399" width="200" height="38" rx="19" fill="#326b9a"/>
+  <text x="1357" y="425" text-anchor="middle" class="badge-text">ZONA lab.exemple.com</text>
+  <text x="1357" y="462" text-anchor="middle" class="small">Administrada separadament</text>
+  <path class="branch" d="M1357 490 V530 M1357 530 H1307 V565 M1357 530 H1410 V565"/>
+  <rect x="1282" y="490" width="150" height="48" rx="12" fill="#fff" stroke="#4983b8" stroke-width="2"/>
+  <text x="1357" y="521" text-anchor="middle" class="label">lab.exemple.com</text>
+  <rect x="1255" y="565" width="105" height="48" rx="12" fill="#fff" stroke="#4983b8" stroke-width="2"/>
+  <text x="1307" y="596" text-anchor="middle" class="label">api</text>
+  <rect x="1360" y="565" width="105" height="48" rx="12" fill="#fff" stroke="#4983b8" stroke-width="2"/>
+  <text x="1412" y="596" text-anchor="middle" class="label">dev</text>
+  <text x="1357" y="651" text-anchor="middle" class="small">Registres propis de la zona</text>
+
+  <rect x="160" y="814" width="25" height="25" rx="5" fill="none" stroke="#32cd33" stroke-width="3" stroke-dasharray="7 4"/>
+  <text x="198" y="834" class="legend-text">Domini: branca de noms</text>
+  <rect x="520" y="814" width="25" height="25" rx="5" fill="#eff8ef" stroke="#32cd33" stroke-width="3"/>
+  <text x="558" y="834" class="legend-text">Zona exemple.com</text>
+  <rect x="870" y="814" width="25" height="25" rx="5" fill="#f4f9ff" stroke="#4983b8" stroke-width="3"/>
+  <text x="908" y="834" class="legend-text">Zona delegada</text>
+  <path class="delegation" d="M1220 826 H1270" marker-end="url(#arrow)"/>
+  <text x="1290" y="834" class="legend-text">Delegació NS</text>
+</svg>
