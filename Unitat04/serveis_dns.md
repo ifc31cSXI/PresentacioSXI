@@ -114,8 +114,9 @@ Els noms internacionalitzats poden aparèixer com Unicode a les aplicacions, per
 * **Autoritatiu:** publica dades oficials d'una o més zones.
 * **Primari:** on s'edita la zona; **secundari:** obté una còpia mitjançant transferència.
 * Primari i secundari poden respondre autoritativament: el secundari no és una còpia «menys vàlida».
-* **Resolutor recursiu:** consulta altres servidors i guarda resultats a la memòria cau.
-* **Reenviador:** passa consultes a un altre resolutor, sovint per política o per centralitzar la memòria cau.
+* **Només autoritzat:** responen les peticions relatives de la seva zona.
+* **Resolutor DNS recursiu (recursive DNS Resolver):** consulta altres servidors i guarda resultats a la memòria cau.
+* **Reenviador:** passa consultes a un altre resolutor DNS, sovint per política o per centralitzar la memòria cau.
 * Un mateix programari pot assumir més d'un rol, però cal configurar bé els límits d'autoritat i recursió.
 
 ---
@@ -125,7 +126,7 @@ Els noms internacionalitzats poden aparèixer com Unicode a les aplicacions, per
 * Hi ha **13 identitats lògiques** de servidors arrel, anomenades de `A` a `M`.
 * No són només 13 màquines físiques: les instàncies distribuïdes amb *anycast* en serveixen les consultes arreu del món.
 * Els servidors arrel retornen principalment delegacions dels TLD; no resolen tots els noms d'Internet.
-* Normalment un resolutor recursiu només els consulta quan no té la resposta a la memòria cau.
+* Normalment un resolutor DNS recursiu només els consulta quan no té la resposta a la memòria cau.
 
 https://root-servers.org/
 
@@ -136,7 +137,7 @@ https://www.iana.org/domains/root/db
 ## Com arriba una consulta?
 
 1. Una aplicació demana resoldre un nom al sistema operatiu.
-2. El *stub resolver* consulta les fonts locals configurades i, si escau, envia una consulta al resolutor recursiu.
+2. El *stub resolver* consulta les fonts locals configurades i, si escau, envia una consulta al resolutor DNS recursiu.
 3. Si no té una resposta vàlida a la memòria cau, el recursiu consulta l'arrel, el TLD i el servidor autoritatiu.
 4. El recursiu retorna el resultat al client i el desa a la memòria cau durant el TTL.
 
@@ -144,7 +145,7 @@ https://www.iana.org/domains/root/db
 </br>
 
 ```text
-Aplicació → stub del sistema → resolutor recursiu → arrel → TLD → autoritatiu
+Aplicació → stub del sistema → resolutor DNS recursiu → arrel → TLD → autoritatiu
                                       ← resposta emmagatzemada a la memòria cau
 ```
 
@@ -158,13 +159,38 @@ Aplicació → stub del sistema → resolutor recursiu → arrel → TLD → aut
 * Una resposta autoritativa ve d'un servidor autoritatiu; una resposta de memòria cau no és autoritativa.
 * El TTL limita quant de temps es pot reutilitzar una resposta emmagatzemada.
 
+
+
 ---
 
-## Memòria cau i resultats negatius
+## Consulta recursiva
 
+![alt text](img/consulta_recursiva.png
+)
+
+note: 
+identificar les peticions recursives/iteratives
+identificar les respostes autoritatives/no autoritatives
+
+---
+
+## Consulta iterativa
+
+![alt text](img/consulta_iterativa.png
+)
+
+note: 
+identificar les peticions recursives/iteratives
+identificar les respostes autoritatives/no autoritatives
+
+---
+
+## Resolutor DNS recursiu 
+
+* Consulta altres servidors i guarda resultats a la memòria cau.
 * La memòria cau redueix latència i càrrega als servidors autoritatius.
-* El TTL de cada registre determina el temps màxim que els resolutors en poden conservar la resposta.
-* També es poden emmagatzemar resultats negatius, com ara que un nom no existeix; el seu temps es determina a partir de la zona SOA.
+* El TTL de cada registre determina el temps màxim que els resolutors DNS recursiu en poden conservar la resposta.
+* També s'emmagatzemem les consultes a dominis no existents **NXDOMAIN** per evitar repetir aquestes consultes.
 * Canviar un registre no esborra les còpies que ja són a les memòries cau: la propagació pot trigar fins que caduquin.
 
 ---
@@ -242,12 +268,35 @@ www    IN AAAA  2001:db8::10
 
 ---
 
+## Camps del registre SOA 
+
+El registre `SOA` descriu paràmetres principals de la zona:
+
+| Camp | Significat |
+|---|---|
+| **MNAME** | Servidor principal de la zona: `ns1.exemple.com.` |
+| **RNAME** | Correu del responsable; `hostmaster.exemple.com.` representa `hostmaster@exemple.com`. |
+| **Sèrie** (*serial*) | Versió de la zona; s'incrementa quan se'n publiquen canvis. |
+| **Refresh / Retry** | En segons: cada quant els secundaris comproven si hi ha canvis i quant esperen per tornar-ho a provar si falla. |
+| **Expire** | En segons: temps màxim que un secundari pot servir la zona sense actualitzar-la correctament. |
+| **Minimum** | En segons: participa en el TTL de memòria cau negativa; s'utilitza el menor entre aquest valor i el TTL del `SOA`. No és un TTL negatiu. |
+
+---
+
+## registres NS
+
+* El registre `NS` indica els servidors autoritatius d'una zona. 
+  Per exemple, `@ IN NS ns1.exemple.com.` n'anuncia un. 
+* A la zona pare, els `NS` indiquen a quins servidors es delega la zona filla. 
+* El registre `NS` conté un nom de servidor, no la seva adreça IP.
+* Una zona coma a mínim tindrà un registre `NS`.
+
+---
+
 ## Alias i noms canònics
 
 * `CNAME` crea un àlies que apunta a un altre nom, no directament a una adreça.
 * El nom amb `CNAME` no hauria de tenir altres registres de dades al mateix nom.
-* No es pot posar un `CNAME` a l'apex d'una zona DNS convencional, perquè hi ha d'haver `SOA` i `NS`.
-* Alguns proveïdors ofereixen *ALIAS* o *CNAME flattening* a l'apex; són extensions del proveïdor, no un tipus de registre DNS estàndard.
 
 ---
 
@@ -289,7 +338,7 @@ www    IN AAAA  2001:db8::10
 
 * DNSSEC permet validar l'origen i la integritat de les dades DNS mitjançant signatures digitals i una cadena de confiança.
 * Registres clau: `DNSKEY`, `DS`, `RRSIG` i, per demostrar absència, `NSEC` o `NSEC3`.
-* El resolutor validador comprova la cadena fins a una ancoratge de confiança.
+* El resolutor validador comprova la cadena fins a un ancoratge de confiança.
 * DNSSEC **no xifra** consultes ni respostes, no amaga els noms consultats i no evita una denegació de servei.
 * Cal distingir entre una resposta signada i una resposta efectivament validada pel client o resolutor.
 
@@ -350,7 +399,7 @@ dig @1.1.1.1 www.example.com
 
 * `+trace` mostra el seguiment iteratiu de delegacions des de l'arrel.
 * `@servidor` selecciona el servidor consultat.
-* Compara la resposta autoritativa amb la resposta del resolutor recursiu i fixa't en TTL, `status` i flags.
+* Compara la resposta autoritativa amb la resposta del resolutor DNS recursiu i fixa't en TTL, `status` i flags.
 * Utilitza noms i adreces de documentació en exemples; no assumeixis que una IP DNS pública és adequada per a totes les xarxes.
 
 ---
@@ -358,7 +407,7 @@ dig @1.1.1.1 www.example.com
 ## Idees clau
 
 * DNS és jeràrquic, distribuït i basat en delegació i memòria cau.
-* El resolutor recursiu treballa pel client; els servidors autoritatius publiquen les dades de zona.
+* El resolutor DNS recursiu treballa pel client; els servidors autoritatius publiquen les dades de zona.
 * Els registres `A`, `AAAA`, `CNAME`, `MX`, `NS`, `SOA` i `PTR` cobreixen molts casos bàsics.
 * DNSSEC valida dades; DoH/DoT/DoQ xifren un tram del transport. Són proteccions diferents.
 * Les transferències i actualitzacions s'han de restringir i autenticar.
@@ -383,6 +432,6 @@ dig @1.1.1.1 www.example.com
 
 **Preguntes i debat**
 
-* Per què un resolutor recursiu no necessita preguntar sempre als servidors arrel?
+* Per què un resolutor DNS recursiu no necessita preguntar sempre als servidors arrel?
 * Quina diferència hi ha entre DNSSEC i DNS over HTTPS?
 * Qui ha d'autoritzar i protegir una transferència de zona?
