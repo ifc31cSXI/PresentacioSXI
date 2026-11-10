@@ -2,7 +2,8 @@
 Aquest error es dona amb els template de LXC per ubuntu 26.04.
 
 Si **`dig` i `nslookup` no funcionen per la consola xterm.js de Proxmox**, mentre que `echo` i altres ordres sí que funcionen, no sembla un problema general de xterm.js.
-Poden ser per:
+
+Possibles errades:
 1. Problemes amb la sortida estàndard o errors de resolució DNS de les comandes `dig`  i `nslookup`.
 
 ### 1. Executa aquestes proves des de xterm.js
