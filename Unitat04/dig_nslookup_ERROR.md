@@ -9,9 +9,6 @@ Possibles errades:
 ### 1. Executa aquestes proves des de xterm.js
 
 ### 2. La causa: AppArmor d'Ubuntu 26.04
-
-Hi ha un cas pràcticament idèntic al teu al fòrum oficial de Proxmox.
-
 Ubuntu 26.04 incorpora perfils AppArmor per a `dig` i `nslookup` que poden bloquejar l'accés a la consola TTY de Proxmox. Això fa que les ordres acabin sense mostrar cap resultat, tot i funcionar perfectament per SSH. [Proxmox Support Forum](https://forum.proxmox.com/threads/ubuntu-26-04-lxc-cant-resolve-dns.187146/?utm_source=chatgpt.com)
 
 ### 3. Solució proposada
@@ -48,7 +45,7 @@ I després:
 nslookup google.com
 ```
 
-Hauries de veure les respostes DNS normalment.
+Comprovar que les respostes DNS es veuen normalment.
 
 **Important:** no és recomanable desinstal·lar AppArmor ni desactivar-ne tots els perfils. Aquesta correcció és molt més específica i conserva la resta de proteccions.
 
