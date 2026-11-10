@@ -13,7 +13,7 @@ Ubuntu 26.04 incorpora perfils AppArmor per a `dig` i `nslookup` que poden bloqu
 
 ### 3. Solució proposada
 
-Aplicar una correcció específica sense desactivar tot AppArmor.
+Aplica una correcció específica sense desactivar tot AppArmor.
 
 Dins del contenidor LXC, com a root, executa:
 
@@ -45,7 +45,7 @@ I després:
 nslookup google.com
 ```
 
-Comprovar que les respostes DNS es veuen normalment.
+Comprova que les respostes DNS es veuen normalment.
 
 **Important:** no és recomanable desinstal·lar AppArmor ni desactivar-ne tots els perfils. Aquesta correcció és molt més específica i conserva la resta de proteccions.
 
